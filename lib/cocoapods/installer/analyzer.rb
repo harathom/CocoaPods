@@ -816,7 +816,11 @@ module Pod
         end.max
         if platform_name == :ios && host_requires_frameworks
           minimum = Version.new('8.0')
-          deployment_target = [deployment_target, minimum].max
+          if deployment_target.nil?
+            deployment_target = minimum
+          else
+            deployment_target = [deployment_target, minimum].max
+          end
         end
         Platform.new(platform_name, deployment_target)
       end
